@@ -228,10 +228,8 @@ namespace amethyst_installer_gui.Pages {
         private void registerOverlay_Click(object sender, RoutedEventArgs e) {
             SoundPlayer.PlaySound(SoundEffect.Invoke);
 
-            string ameManifestPath = Path.GetFullPath(Path.Combine(InstallerStateManager.AmethystOpenVrDirectory, "Amethyst.vrmanifest"));
-            OpenVRUtil.RegisterOverlayAndAutoStart(ameManifestPath, Constants.OpenVROverlayKey, true);
-
-            Util.ShowMessageBox("Registed Amethsyt overlay for OpenVR.", "OpenVR Status");
+            string ameManifestPath = Path.GetFullPath(Path.Combine(InstallerStateManager.AmethystOpenVrPluginDirectory, "Amethyst.vrmanifest"));
+            Util.ShowMessageBox($"Tried to register Amethyst overlay for OpenVR with result: {OpenVRUtil.RegisterOverlayAndAutoStart(ameManifestPath, Constants.OpenVROverlayKey, true)}", "OpenVR Status");
         }
     }
 }

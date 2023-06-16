@@ -5,7 +5,36 @@ using System.Runtime.InteropServices;
 
 namespace amethyst_installer_gui.PInvoke {
     public static class Shell {
+        
+        [DllImport("Shell32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern uint SHGetKnownFolderItem([In, MarshalAs(UnmanagedType.LPStruct)] Guid rfid, uint flags, IntPtr hToken, ref Guid riid, ref IntPtr ppv);
+        
+        public static readonly Guid FOLDERID_AppsFolder = new Guid(0x1e87508d, 0x89c2, 0x42f0, 0x8a, 0x7e, 0x64, 0x5a, 0x0f, 0x50, 0xca, 0x58);
 
+        [DllImport("Shell32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern uint SHCreateItemFromRelativeName(IntPtr psiParent, string pszName, IntPtr pbc, ref Guid riid, ref IntPtr ppv);
+
+        [DllImport("Shell32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern uint SHGetIDListFromObject(IntPtr punk, out IntPtr ppidl);
+
+        [DllImport("Shell32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        public static extern IntPtr ILFindLastID(IntPtr pidl);
+
+        [DllImport("Shell32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        public static extern IntPtr ILClone(IntPtr pidl);
+
+        [DllImport("Shell32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        public static extern Boolean ILRemoveLastID(IntPtr pidl);
+
+        [DllImport("Shell32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        public static extern void ILFree(IntPtr pidl);
+
+        [DllImport("Shell32.dll", CharSet = CharSet.Unicode, SetLastError = true, EntryPoint = "#740")]
+        public static extern uint SHCreateFileDataObject(IntPtr pidlFolder, uint cidl, IntPtr[] apidl, System.Runtime.InteropServices.ComTypes.IDataObject pdtInner, out System.Runtime.InteropServices.ComTypes.IDataObject ppdtobj);
+
+        [DllImport("Shell32.dll", CharSet = CharSet.Unicode, SetLastError = true, EntryPoint = "#172")]
+        public static extern uint SHCreateLinks(IntPtr hwnd, string pszDir, System.Runtime.InteropServices.ComTypes.IDataObject pDataObj, uint fFlags, IntPtr ppidl);
+        
         [DllImport("shell32.dll", SetLastError = true)]
         private static extern int SHOpenFolderAndSelectItems(IntPtr pidlFolder, uint cidl, [In, MarshalAs(UnmanagedType.LPArray)] IntPtr[] apidl, uint dwFlags);
 

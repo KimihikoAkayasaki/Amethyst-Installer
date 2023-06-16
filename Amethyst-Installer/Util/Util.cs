@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
@@ -16,6 +17,9 @@ using amethyst_installer_gui.Installer;
 using amethyst_installer_gui.PInvoke;
 using amethyst_installer_gui.Popups;
 using Microsoft.Win32;
+using NAudio.Utils;
+using System.Linq;
+using Windows.Management.Deployment;
 
 namespace amethyst_installer_gui {
     public static class Util {
@@ -383,6 +387,42 @@ namespace amethyst_installer_gui {
             shortcut.IconLocation = $"{file},0";
             shortcut.WorkingDirectory = directory;
             shortcut.Save();
+        }
+
+        public static void CreateStoreAppShortcut(string path, string appUserModel) {
+
+            Guid GUID_IShellItem = new("43826D1E-E718-42EE-BC55-A1E261C37BFE"); // IID_IShellItem RIID
+
+            IntPtr psi = IntPtr.Zero;
+            var hr = Shell.SHGetKnownFolderItem(Shell.FOLDERID_AppsFolder, 0x00000000, IntPtr.Zero, ref GUID_IShellItem, ref psi);
+
+            IntPtr psi2 = IntPtr.Zero;
+            hr = Shell.SHCreateItemFromRelativeName(psi, appUserModel, IntPtr.Zero, ref GUID_IShellItem, ref psi2);
+
+            if ( hr is 0 ) {
+                IntPtr pidlParent = IntPtr.Zero, pidlFull = IntPtr.Zero, pidlItem = IntPtr.Zero;
+                var aPidl = new IntPtr[255];
+                hr = Shell.SHGetIDListFromObject(psi2, out pidlFull);
+
+                if ( hr is 0 ) {
+                    pidlItem = Shell.ILFindLastID(pidlFull);
+                    aPidl[0] = Shell.ILClone(pidlItem);
+
+                    Shell.ILRemoveLastID(pidlFull);
+                    pidlParent = Shell.ILClone(pidlFull);
+                    Shell.ILFree(pidlFull);
+
+                    System.Runtime.InteropServices.ComTypes.IDataObject pDataObject;
+                    hr = Shell.SHCreateFileDataObject(pidlParent, 1, aPidl, null, out pDataObject);
+                    if ( hr is 0 ) {
+                        //hr = SHCreateLinks(IntPtr.Zero, null, pDataObject, 1, IntPtr.Zero);
+                        hr = Shell.SHCreateLinks(IntPtr.Zero, path, pDataObject, 0, IntPtr.Zero);
+                        Marshal.ReleaseComObject(pDataObject);
+                    }
+                }
+                Marshal.Release(psi2);
+            }
+            Marshal.Release(psi);
         }
 
         public static string GetChecksum(string filePath) {

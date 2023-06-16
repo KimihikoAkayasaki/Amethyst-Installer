@@ -5,25 +5,25 @@
 			"display_name": "Amethyst",
 			"summary": "The Amethyst application itself.",
 			"description": "The Amethyst application itself.",
-			"display_version": "1.2.1.3",
+			"display_version": "1.2.1.13",
 			"version": 5,
-			"filesize": 638759756,
-			"downloadsize": 234740216,
+			"filesize": 594756409,
+			"downloadsize": 261977840,
 			"required": true,
 			"visible": true,
 			"critical": true,
 			"depends": [
-				"vcredist2022"
+				"uwpruntime"
 			],
 			"remote": {
-				"main_url": "https://github.com/KinectToVR/Amethyst-Releases/releases/download/v1.2.1.3/Amethyst-Release-84d9ffc.k2a",
-				"mirror_url": "https://api.k2vr.tech/mirrors/amethyst-latest.k2a",
-				"filename": "amethyst-latest.k2a",
-				"checksum": "9BCE55A7B395CF6A9572FDE043EBF8AB"
+				"main_url": "https://appcenter-filemanagement-distrib4ede6f06e.azureedge.net/597e94a5-6876-4958-b5ed-ba0fbaf5bae8/Amethyst_1.2.1.13_x64.msix?sv=2019-02-02&sr=c&sig=I4FoQGlw54E2lck41Ff%2FKG2zOy6Zn4UwCWQgo%2FSkUyE%3D&se=2023-06-17T14%3A01%3A17Z&sp=r",
+				"mirror_url": "https://appcenter-filemanagement-distrib4ede6f06e.azureedge.net/597e94a5-6876-4958-b5ed-ba0fbaf5bae8/Amethyst_1.2.1.13_x64.msix?sv=2019-02-02&sr=c&sig=I4FoQGlw54E2lck41Ff%2FKG2zOy6Zn4UwCWQgo%2FSkUyE%3D&se=2023-06-17T14%3A01%3A17Z&sp=r",
+				"filename": "Amethyst_1.2.1.13_x64.msix",
+				"checksum": "81EC97A2B0A12832B5A31FBB0D8B5BD6"
 			},
 			"install": {
 				"type": "amethyst",
-				"format": "k2a"
+				"format": "store"
 			},
 			"detect": {
 				"type": "amethyst",
@@ -34,37 +34,33 @@
 			}
 		},
 		{
-			"id": "vcredist2022",
-			"display_name": "Visual C++ Redistributable 2022",
-			"summary": "Visual C++ runtime libraries.",
-			"description": "Visual C++ runtime libraries.",
-			"display_version": "14.32.31332.0",
+			"id": "uwpruntime",
+			"display_name": "Microsoft Visual C++ 2015 UWP Desktop Runtime",
+			"summary": "UWP Desktop Visual C++ runtime libraries.",
+			"description": "UWP Desktop Visual C++ runtime libraries.",
+			"display_version": "14.0.30704.0",
 			"version": 1,
-			"filesize": 12005376,
-			"downloadsize": 25234792,
+			"filesize": 6638831,
+			"downloadsize": 6638831,
 			"required": true,
 			"visible": false,
 			"critical": true,
 			"depends": [],
 			"remote": {
-				"main_url": "https://aka.ms/vs/17/release/vc_redist.x64.exe",
-				"mirror_url": "https://api.k2vr.tech/mirrors/vc_redist.x64.exe",
-				"filename": "vc_redist.x64.exe",
-				"checksum": "703BD677778F2A1BA1EB4338BAC3B868"
+				"main_url": "https://download.microsoft.com/download/4/7/c/47c6134b-d61f-4024-83bd-b9c9ea951c25/appx/Microsoft.VCLibs.x64.14.00.Desktop.appx",
+				"mirror_url": "https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx",
+				"filename": "Microsoft.VCLibs.x64.14.00.Desktop.appx",
+				"checksum": "B1A8BD024B41A2B9B25469A6771FB343"
 			},
 			"install": {
-				"type": "exe",
+				"type": "store",
 				"items": [
-					{
-						"executable": "vc_redist.x64.exe",
-						"arguments": "/install /quiet /norestart",
-						"successful_exit_codes": [ 0, 3010, 1641, 1602, 1604, 1618 ]
-					}
+					"Microsoft.VCLibs.140.00.UWPDesktop"
 				]
 			},
 			"detect": {
-				"type": "vcredist",
-				"version": "2022"
+				"type": "uwpruntime",
+				"version": "2015"
 			}
 		},
 		{

@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using Windows.System;
 
 namespace amethyst_installer_gui.Pages {
     /// <summary>
@@ -32,17 +33,17 @@ namespace amethyst_installer_gui.Pages {
             if ( MainWindow.HandleSpeedrun() ) {
 
                 if ( autoStartSteamVr.Visibility == Visibility.Visible ) {
-                    string ameManifestPath = Path.GetFullPath(Path.Combine(InstallerStateManager.AmethystOpenVrDirectory, "Amethyst.vrmanifest"));
+                    string ameManifestPath = Path.GetFullPath(Path.Combine(InstallerStateManager.AmethystOpenVrPluginDirectory, "Amethyst.vrmanifest"));
                     OpenVRUtil.RegisterOverlayAndAutoStart(ameManifestPath, Constants.OpenVROverlayKey, autoStartSteamVr.IsChecked ?? false);
                 }
 
                 if ( launchAmeOnExit.IsChecked.Value ) {
+                    if ( launchAmeOnExit.IsChecked.Value ) {
 
-                    SystemUtility.ExecuteProcessUnElevated(
-                        Path.GetFullPath(Path.Combine(InstallerStateManager.AmethystInstallDirectory, "Amethyst.exe")),
-                        "",
-                        InstallerStateManager.AmethystInstallDirectory,
-                        ShowWindow.SW_NORMAL);
+                        SystemUtility.ExecuteProcessUnElevated(
+                            "amethyst-app:", "",
+                            InstallerStateManager.AmethystInstallDirectory);
+                    }
                 }
 
                 Util.Quit(ExitCodes.OK);

@@ -1,6 +1,8 @@
 using amethyst_installer_gui.Controls;
 using amethyst_installer_gui.Installer;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -40,56 +42,51 @@ namespace amethyst_installer_gui.Pages {
             Util.HandleKeyboardFocus(e);
             if ( !MainWindow.HandleSpeedrun() )
                 return;
-            
-            // Advance to next page
-            SoundPlayer.PlaySound(SoundEffect.MoveNext);
-            MainWindow.Instance.SetPage(InstallerState.InstallDestination);
+
+            // Prepare other data for the next page
+            PageSystemRequirements.FreeDriveSpace = new DriveInfo("C").AvailableFreeSpace;
+
             InstallerStateManager.ModulesToInstall.Clear();
-            List<Module> modulesPostBuffer = new List<Module>();
+            List<Module> modulesPostBuffer = new();
 
-            for ( int i = 0; i < installableItemControls.Count; i++ ) {
-
-                var module = ( Module ) installableItemControls[i].Tag;
+            foreach (var t in installableItemControls)
+            {
+                var module = ( Module ) t.Tag;
 
                 // Directly read the checkbox because when toggling the chexbox rather than clicking the control directly the
                 // "Checked" property's state is deferred till after this method is executed, however the "itemCheckbox.IsChecked"
                 // property is reliable for this page's purposes
-                bool isChecked = installableItemControls[i].Disabled ?
-                    true : (installableItemControls[i].itemCheckbox?.IsChecked ?? false);
+                bool isChecked = t.Disabled || (t.itemCheckbox?.IsChecked ?? false);
 
                 // Go through dependencies
-                for ( int j = 0; j < module.Depends.Count; j++ ) {
-
-                    var thisModule = InstallerStateManager.API_Response.Modules[InstallerStateManager.ModuleIdLUT[module.Depends[j]]];
-
-                    if ( isChecked ) {
-                        // For dependency in X
-                        Logger.Info($"Queueing dependency \"{thisModule.Id}\"...");
-                        if ( !InstallerStateManager.ModulesToInstall.Contains(thisModule) ) {
-                            if ( InstallerStateManager.ShouldInstallModule(thisModule) ) {
-                                InstallerStateManager.ModulesToInstall.Add(thisModule);
-                            }
-                        }
+                foreach (Module thisModule in module.Depends.Select(t1 => InstallerStateManager.API_Response
+                             .Modules[InstallerStateManager.ModuleIdLUT[t1]]).Where(_ => isChecked))
+                {
+                    // For dependency in X
+                    Logger.Info($"Queueing dependency \"{thisModule.Id}\"...");
+                    if ( !InstallerStateManager.ModulesToInstall.Contains(thisModule) && 
+                         InstallerStateManager.ShouldInstallModule(thisModule) ) {
+                        InstallerStateManager.ModulesToInstall.Add(thisModule);
                     }
                 }
 
-                if ( isChecked ) {
-                    Logger.Info($"Queueing module \"{module.Id}\"...");
-                    modulesPostBuffer.Add(module);
-                }
+                if ( !isChecked ) continue;
+
+                Logger.Info($"Queueing module \"{module.Id}\"...");
+                modulesPostBuffer.Add(module);
             }
 
             // Merge the dependencies and modules lists together, so that dependencies are earlier than modules.
             // This should resolve dependency chain issues where a module installs out of order
             for ( int i = 0; i < InstallerStateManager.ModulesToInstall.Count; i++ ) {
-                for ( int j = 0; j < modulesPostBuffer.Count; j++ ) {
-                    var deps = InstallerStateManager.ModulesToInstall[i];
-                    var mod = modulesPostBuffer[j];
-
-                    if ( deps.Id == mod.Id ) {
-                        InstallerStateManager.ModulesToInstall.RemoveAt(i);
-                        i--;
-                    }
+                foreach (Module _ in modulesPostBuffer
+                             .Select(t => new { t, deps = InstallerStateManager.ModulesToInstall[i] })
+                             .Select(@t1 => new { @t1, mod = @t1.t })
+                             .Where(@t1 => @t1.@t1.deps.Id == @t1.mod.Id)
+                             .Select(@t1 => @t1.@t1.deps) )
+                {
+                    InstallerStateManager.ModulesToInstall.RemoveAt(i);
+                    i--;
                 }
             }
             // Add the list of modules which depend on other modules to the back of the modules to install vector
@@ -99,6 +96,10 @@ namespace amethyst_installer_gui.Pages {
             installableItemControls.Clear();
 
             PageSystemRequirements.RequiredStorage = m_totalDownloadSize + m_totalInstallSize;
+
+            // Advance to next page
+            SoundPlayer.PlaySound(SoundEffect.MoveNext);
+            MainWindow.Instance.SetPage(InstallerState.SystemRequirements);
         }
 
         public void OnSelected() {

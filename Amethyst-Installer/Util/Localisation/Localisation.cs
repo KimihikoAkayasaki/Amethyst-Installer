@@ -87,36 +87,6 @@ namespace amethyst_installer_gui {
 		public string EULA_Warranty => 
 			LocaleManager.GetString("EULA_Warranty");
 
-		public string InstallDestination_AmeInstallFound => 
-			LocaleManager.GetString("InstallDestination_AmeInstallFound");
-
-		public string InstallDestination_AmethystInstallLocationFootnote => 
-			LocaleManager.GetString("InstallDestination_AmethystInstallLocationFootnote");
-
-		public string InstallDestination_DiskLabelFormat => 
-			LocaleManager.GetString("InstallDestination_DiskLabelFormat");
-
-		public string InstallDestination_InvalidPathDescription => 
-			LocaleManager.GetString("InstallDestination_InvalidPathDescription");
-
-		public string InstallDestination_InvalidPathTitle => 
-			LocaleManager.GetString("InstallDestination_InvalidPathTitle");
-
-		public string InstallDestination_OpenFolder => 
-			LocaleManager.GetString("InstallDestination_OpenFolder");
-
-		public string InstallDestination_PathPlaceholder => 
-			LocaleManager.GetString("InstallDestination_PathPlaceholder");
-
-		public string InstallDestination_StorageFormatFree => 
-			LocaleManager.GetString("InstallDestination_StorageFormatFree");
-
-		public string InstallDestination_CreateStartMenuShortcut => 
-			LocaleManager.GetString("InstallDestination_CreateStartMenuShortcut");
-
-		public string InstallDestination_CreateDesktopShortcut => 
-			LocaleManager.GetString("InstallDestination_CreateDesktopShortcut");
-
 		public string InstallOptions_ClickToViewSummary => 
 			LocaleManager.GetString("InstallOptions_ClickToViewSummary");
 
@@ -318,14 +288,14 @@ namespace amethyst_installer_gui {
 		public string AmethystModule_Amethyst_Description => 
 			LocaleManager.GetString("AmethystModule_Amethyst_Description");
 
-		public string AmethystModule_VCRedist_Title => 
-			LocaleManager.GetString("AmethystModule_VCRedist_Title");
+		public string AmethystModule_UWPRuntime_Title => 
+			LocaleManager.GetString("AmethystModule_UWPRuntime_Title");
 
-		public string AmethystModule_VCRedist_Summary => 
-			LocaleManager.GetString("AmethystModule_VCRedist_Summary");
+		public string AmethystModule_UWPRuntime_Summary => 
+			LocaleManager.GetString("AmethystModule_UWPRuntime_Summary");
 
-		public string AmethystModule_VCRedist_Description => 
-			LocaleManager.GetString("AmethystModule_VCRedist_Description");
+		public string AmethystModule_UWPRuntime_Description => 
+			LocaleManager.GetString("AmethystModule_UWPRuntime_Description");
 
 		public string KinectModule_WIX_Title => 
 			LocaleManager.GetString("KinectModule_WIX_Title");

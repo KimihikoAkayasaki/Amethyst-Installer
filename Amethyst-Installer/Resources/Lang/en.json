@@ -11,18 +11,7 @@
   "EULA_DontAgree": "I do not agree",
   "EULA_Licenses": "Follows are licenses for libraries used by this installer, Amethyst and device plugins.\n\nYou must accept the Kinect for Windows related EULAs to continue with installation.", /* We drop a lot of "copy pastas" here */
   "EULA_Warranty": "By continuing with installation, you agree that this software, and every component bundled or installed by it are provided \"as-is\" and come with no warranty whatsoever. The developers and maintainers of each respective component, library, or software are not responsible for any claims, damages or liability.", /* We are not reponsible for you being braindead */
-
-  "InstallDestination_AmeInstallFound": "This folder already contains an installation of Amethyst, it will be overwritten.", /* Shown if the install folder is detected to have a copy of Amethyst */
-  "InstallDestination_AmethystInstallLocationFootnote": "Only Amethyst will be installed to this folder. Other items will be installed to their default locations.",
-  "InstallDestination_DiskLabelFormat": "{0} ({1})", /* {0} gets replaced with the disk label (eg "Local Disk") and {1} gets replaced with the drive letter {eg "C:" ) */
-  "InstallDestination_InvalidPathDescription": "The path you've entered is invalid. Please enter a valid path.",
-  "InstallDestination_InvalidPathTitle": "Invalid Path",
-  "InstallDestination_OpenFolder": "Open Folder",
-  "InstallDestination_PathPlaceholder": "Please select a valid install folder",
-  "InstallDestination_StorageFormatFree": "{0} free", /* {0} is required (it's going to get replaced with 420GB for example) */
-  "InstallDestination_CreateStartMenuShortcut": "Create a Start menu entry",
-  "InstallDestination_CreateDesktopShortcut": "Create a desktop shortcut",
-
+  
   /* Install Options download size and install size strings */
   "InstallOptions_ClickToViewSummary": "Click an item to see details.",
   "InstallOptions_DownloadSize": "Download Size:",
@@ -107,9 +96,9 @@
   "AmethystModule_Amethyst_Summary": "The Amethyst application itself.",
   "AmethystModule_Amethyst_Description": "The Amethyst application itself.",
 
-  "AmethystModule_VCRedist_Title": "Visual C++ Redistributable 2022",
-  "AmethystModule_VCRedist_Summary": "Visual C++ runtime libraries.",
-  "AmethystModule_VCRedist_Description": "Visual C++ runtime libraries.",
+  "AmethystModule_UWPRuntime_Title": "Microsoft Visual C++ 2015 UWP Desktop Runtime",
+  "AmethystModule_UWPRuntime_Summary": "UWP Desktop Visual C++ runtime libraries.",
+  "AmethystModule_UWPRuntime_Description": "UWP Desktop Visual C++ runtime libraries.",
 
   "KinectModule_WIX_Title": "Windows Install XML Toolset",
   "KinectModule_WIX_Summary": "An intermediary tool required to install the Kinect for Windows SDK v1.8.",

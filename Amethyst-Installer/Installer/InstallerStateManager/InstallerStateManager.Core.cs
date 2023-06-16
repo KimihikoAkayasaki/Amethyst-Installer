@@ -8,6 +8,7 @@ using amethyst_installer_gui.Installer.Modules;
 using amethyst_installer_gui.Installer.Modules.Checks;
 using amethyst_installer_gui.PInvoke;
 using Newtonsoft.Json;
+using Windows.Management.Deployment;
 
 namespace amethyst_installer_gui.Installer {
     /// <summary>
@@ -30,12 +31,25 @@ namespace amethyst_installer_gui.Installer {
         public static Dictionary<string, CheckBase> ModuleCheckOps { get; private set; }
         public static Dictionary<string, ModuleDisplayStrings> ModuleStrings { get; private set; }
 
-        public static string AmethystInstallDirectory;
-        public static string AmethystOpenVrDirectory {
-            get {
-                return Path.Combine(AmethystInstallDirectory ?? "C:\\", "Plugins", "plugin_OpenVR");
-            }
-        }
+        public static string AmethystPackageDataDirectory =>
+            //try {
+            //    return Path.Combine(Path.GetFullPath(Path.Combine(Constants.Userprofile, "AppData", "Local")), "Packages",
+            //        new PackageManager().FindPackagesForUser(CurrentUser.GetCurrentlyLoggedInSid())
+            //            .First(x => x.Id.Name is "K2VRTeam.Amethyst.App").Id.FamilyName);
+            //} catch ( Exception ) {
+            //    // ignored
+            //}
+            Path.Combine(Path.GetFullPath(Path.Combine(Constants.Userprofile, "AppData", "Local")),
+                "Packages", "K2VRTeam.Amethyst.App_s8fgp72jmn3vt");
+
+        public static string AmethystInstallDirectory =>
+            Path.Combine(AmethystPackageDataDirectory, "LocalState", "Install");
+        
+        public static string AmethystVirtualRootDirectory =>
+            Path.Combine(AmethystPackageDataDirectory, "AC", "MutablePackageRoot");
+
+        public static string AmethystOpenVrPluginDirectory =>
+            Path.Combine(AmethystVirtualRootDirectory, "Plugins", "plugin_OpenVR");
 
         /// <summary>
         /// Whether the installer is in the middle of the install process. This prevents the user from closing the installer mid-download or install.
@@ -97,6 +111,7 @@ namespace amethyst_installer_gui.Installer {
             ModuleStrings   = new Dictionary<string, ModuleDisplayStrings>();
 
             ModuleTypes.Add("amethyst", new AmethystModule());
+            ModuleTypes.Add("store", new StoreModule());
             ModuleTypes.Add("exe", new ExeModule());
             ModuleTypes.Add("dark-extract", new DarkModule());
             ModuleTypes.Add("temp-archive", new TempArchiveModule());
@@ -107,7 +122,7 @@ namespace amethyst_installer_gui.Installer {
             ModulePostOps.Add("kinectv1", new PostKinectV1());
             ModulePostOps.Add("kinectv2", new PostKinectV2());
 
-            ModuleCheckOps.Add("vcredist", new CheckVcredist());
+            ModuleCheckOps.Add("uwpruntime", new CheckUwpRuntime());
 
             // Module strings
             ModuleStrings.Add("amethyst", new ModuleDisplayStrings() {
@@ -115,10 +130,10 @@ namespace amethyst_installer_gui.Installer {
                 Summary     = Localisation.Manager.AmethystModule_Amethyst_Summary,
                 Description = Localisation.Manager.AmethystModule_Amethyst_Description,
             });
-            ModuleStrings.Add("vcredist2022", new ModuleDisplayStrings() {
-                Title       = Localisation.Manager.AmethystModule_VCRedist_Title,
-                Summary     = Localisation.Manager.AmethystModule_VCRedist_Summary,
-                Description = Localisation.Manager.AmethystModule_VCRedist_Description,
+            ModuleStrings.Add("uwpruntime", new ModuleDisplayStrings() {
+                Title       = Localisation.Manager.AmethystModule_UWPRuntime_Title,
+                Summary     = Localisation.Manager.AmethystModule_UWPRuntime_Summary,
+                Description = Localisation.Manager.AmethystModule_UWPRuntime_Description,
             });
             ModuleStrings.Add("wix", new ModuleDisplayStrings() {
                 Title       = Localisation.Manager.KinectModule_WIX_Title,

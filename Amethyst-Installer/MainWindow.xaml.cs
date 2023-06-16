@@ -59,7 +59,6 @@ namespace amethyst_installer_gui {
             Pages.Add(InstallerState.Welcome,               new PageWelcome());
             Pages.Add(InstallerState.InstallOptions,        new PageInstallOptions());
             Pages.Add(InstallerState.AmethystModeSelection, new PageAmethystMode());
-            Pages.Add(InstallerState.InstallDestination,    new PageInstallDestination());
             Pages.Add(InstallerState.SystemRequirements,    new PageSystemRequirements());
             Pages.Add(InstallerState.Downloading,           new PageDownloading());
             Pages.Add(InstallerState.Installation,          new PageInstallation());
@@ -195,7 +194,6 @@ namespace amethyst_installer_gui {
                 // Update checkmarks in sidebar
                 sidebar_welcome.State           = destinatonTab < InstallerState.Welcome              ? TaskState.Default : TaskState.Checkmark;
                 sidebar_installOptions.State    = destinatonTab < InstallerState.InstallOptions       ? TaskState.Default : TaskState.Checkmark;
-                sidebar_location.State          = destinatonTab < InstallerState.InstallDestination   ? TaskState.Default : TaskState.Checkmark;
                 sidebar_sysreq.State            = destinatonTab < InstallerState.SystemRequirements   ? TaskState.Default : TaskState.Checkmark;
                 sidebar_download.State          = destinatonTab < InstallerState.Downloading          ? TaskState.Default : TaskState.Checkmark;
                 sidebar_install.State           = destinatonTab < InstallerState.Installation         ? TaskState.Default : TaskState.Checkmark;

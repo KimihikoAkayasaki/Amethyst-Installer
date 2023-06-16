@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shell;
+using Windows.System;
 
 namespace amethyst_installer_gui.Pages {
     /// <summary>
@@ -249,10 +250,8 @@ namespace amethyst_installer_gui.Pages {
 
                         // Launch updater
                         SystemUtility.ExecuteProcessUnElevated(
-                            Path.GetFullPath(Path.Combine(InstallerStateManager.AmethystInstallDirectory, "Amethyst.exe")),
-                            "/afterupdate",
-                            InstallerStateManager.AmethystInstallDirectory,
-                            ShowWindow.SW_NORMAL);
+                            "amethyst-app:after-update", "",
+                            InstallerStateManager.AmethystInstallDirectory);
 
                         // Give the process time to start
                         Thread.Sleep(3000);

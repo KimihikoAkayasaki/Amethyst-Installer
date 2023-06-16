@@ -28,52 +28,48 @@
         /// </summary>
         InstallOptions = 2,
         /// <summary>
-        /// Destination
-        /// </summary>
-        InstallDestination = 3,
-        /// <summary>
         /// System requirements
         /// </summary>
-        SystemRequirements = 4,
+        SystemRequirements = 3,
         /// <summary>
         /// Downloading
         /// </summary>
-        Downloading = 5,
+        Downloading = 4,
         /// <summary>
         /// Installation
         /// </summary>
-        Installation = 6,
+        Installation = 5,
         /// <summary>
         /// Install completed
         /// </summary>
-        Done = 7,
+        Done = 6,
         /// <summary>
         /// Logs viewer
         /// </summary>
-        Logs = 8,
+        Logs = 7,
         /// <summary>
         /// EULA agreement
         /// </summary>
-        EULA = 9,
+        EULA = 8,
         /// <summary>
         /// Exception handling
         /// </summary>
-        Exception = 10,
+        Exception = 9,
 
         /// <summary>
         /// Updating Screen
         /// </summary>
-        Updating = 11,
+        Updating = 10,
 
         /// <summary>
         /// Uninstall Screen
         /// </summary>
-        Uninstall = 12,
+        Uninstall = 11,
 
         /// <summary>
         /// K2EX Upgrade screen
         /// </summary>
-        K2EXUpgrading = 13,
+        K2EXUpgrading = 12,
 
         /// <summary>
         /// DEBUG
